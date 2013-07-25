@@ -13,10 +13,10 @@
 document.addEventListener("deviceready", onDeviceReady, true);
 var lat = 0;
 var lon = 0;
+watchPosition();
 function onDeviceReady() {
 	// Cordova is ready/
 	//navigator.notification.alert('Cordova is ready');
-	watchPosition();
 }
 function alertDismissed() {
   // hacer algo
@@ -44,7 +44,7 @@ function ErrorUbicacion(error) {
 function posicion_ok(position){
 	lat = position.coords.latitude;
 	lon = position.coords.longitude;
-	msg('pos('+lat+','+lon+')');
+	//msg('pos('+lat+','+lon+')');
 }
 $("#lista").live('pagebeforeshow', function() {
 	url = "http://www.exefire.com/pruebas/llamados/rne_lista.php";
