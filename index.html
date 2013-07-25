@@ -13,10 +13,10 @@
 document.addEventListener("deviceready", onDeviceReady, true);
 var lat = 0;
 var lon = 0;
-	watchPosition();
 function onDeviceReady() {
 	// Cordova is ready/
 	//navigator.notification.alert('Cordova is ready');
+	watchPosition();
 }
 function alertDismissed() {
   // hacer algo
