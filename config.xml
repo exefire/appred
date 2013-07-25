@@ -40,7 +40,11 @@
 						
 				<gap:splash src="splash.png" />
 				
-				<gap:splash src="splash/ios/Default.png" width="320" height="480" />
+				<gap:splash src="splash/android/splash_hdpi.png" width="480" height="640" />
+				<gap:splash src="splash/android/splash_ldpi.png" width="426" height="320" />
+				<gap:splash src="splash/android/splash_mdpi.png" width="470" height="320" />
+				<gap:splash src="splash/android/splash_xhdpi.png" width="960" height="720" />
+
 				<gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
 				<gap:splash src="splash/ios/Default_iphone5.png" width="640" height="1136" />
 				<gap:splash src="splash/ios/Default-Landscape.png" width="1024" height="768" />
@@ -55,6 +59,8 @@
         <access origin="http://phonegap.com" subdomains="true" />
 				
 				<plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
+				
+				<plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
 				
 				<plugin name="Geolocation" value="CDVLocation" />
 				
