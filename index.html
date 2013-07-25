@@ -2,9 +2,199 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
+<title>RNE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link href="jquery.mobile-1.2.0.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="jquery.mobile-1.2.0.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script>
+// Wait for Cordova to load
+document.addEventListener("deviceready", onDeviceReady, true);
+var lat = 0;
+var lon = 0;
+	watchPosition();
+function onDeviceReady() {
+	// Cordova is ready/
+	//navigator.notification.alert('Cordova is ready');
+}
+function alertDismissed() {
+  // hacer algo
+}
+function msg(texto){
+	if(typeof(navigator.notification)=='undefined'){
+		alert(texto);
+	}else{
+		navigator.notification.alert(
+				texto,  				// message
+				alertDismissed, // callback
+				'Aloo Copete',  // title
+				'Listo!'        // buttonName
+		);
+	}
+}
+function watchPosition() {
+	var options = { frequency: 1000 };
+	watchID = navigator.geolocation.watchPosition(posicion_ok, ErrorUbicacion, options);
+}
+function ErrorUbicacion(error) {
+	var texto = 'No se ha podido obtener la ubicación.';
+	msg(texto);
+}
+function posicion_ok(position){
+	lat = position.coords.latitude;
+	lon = position.coords.longitude;
+	msg('pos('+lat+','+lon+')');
+}
+$("#lista").live('pagebeforeshow', function() {
+	url = "http://www.exefire.com/pruebas/llamados/rne_lista.php";
+	$("#frame01").attr('src',url);
+});
+$("#mapa").live('pagebeforeshow', function() {
+	url = "http://www.exefire.com/pruebas/llamados/rne_mapa.php";
+	$("#frame02").attr('src',url);
+});
+$("#notificar").live('pagebeforeshow', function() {
+	url = "http://www.exefire.com/pruebas/llamados/rne_notificar.php?lat="+lat+"&lon="+lon+"";
+	$("#frame03").attr('src',url);
+});
+$("#miembros").live('pagebeforeshow', function() {
+	url = "http://www.exefire.com/pruebas/llamados/rne_noticias.php";
+	$("#frame03").attr('src',url);
+});
+</script>
+<style type="text/css">
+a:link {
+	webkitTouchCallout: 'none';
+	webkitUserSelect: 'none';
+}
+[data-role=page] {
+	height: 100% !important;
+	position:relative !important;
+	background:#FFF;
+}
+[data-role=footer] {
+	bottom:0 !important;
+	position:absolute !important;
+	top: auto !important;
+	width:100%;
+}
+[data-role=content] {
+	top: 40px !important;
+	bottom:30px !important;
+	position:absolute !important;
+	width:100%;
+	padding:0px; 
+}
+</style>
 </head>
 
 <body>
+<!-- Pagina -->
+<div data-role="page" id="lista">
+  <!-- Cabecera -->
+  <div data-role="header">
+    <h1>Emergencias</h1>
+  </div>
+  <!-- /Cabecera -->
+  <!-- Contenido -->
+  <div data-role="content">
+   <iframe id="frame01" src="http://www.exefire.com/pruebas/llamados/rne_lista.php" width="100%" height="100%" frameborder="0"></iframe>
+  </div>
+  <!-- /Contenido -->
+  <!-- Abajo --> 
+  <div data-role="footer" style="background:none; border:none;"> 
+    <div data-role="navbar" data-iconpos="bottom" >
+      <ul>
+        <li><a href="#lista" class="ui-btn-active">Lista</a></li>
+        <li><a href="#mapa">Mapa</a></li>
+        <li><a href="#notificar">Notificar</a></li>
+        <li><a href="#miembros">Miembros</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Abajo --> 
+</div>
+<!-- /Pagina -->
+<!-- Pagina -->
+<div data-role="page" id="mapa">
+  <!-- Cabecera -->
+  <div data-role="header">
+    <h1>Emergencias</h1>
+  </div>
+  <!-- /Cabecera -->
+  <!-- Contenido -->
+  <div data-role="content">
+   <iframe id="frame02" src="http://www.exefire.com/pruebas/llamados/rne_mapa.php" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+  </div>
+  <!-- /Contenido -->
+  <!-- Abajo --> 
+  <div data-role="footer" style="background:none; border:none;"> 
+    <div data-role="navbar" data-iconpos="bottom" >
+      <ul>
+        <li><a href="#lista">Lista</a></li>
+        <li><a href="#mapa" class="ui-btn-active">Mapa</a></li>
+        <li><a href="#notificar">Notificar</a></li>
+        <li><a href="#miembros">Miembros</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Abajo --> 
+</div>
+<!-- /Pagina --> 
+
+<!-- Pagina -->
+<div data-role="page" id="notificar">
+  <!-- Cabecera -->
+  <div data-role="header">
+    <h1>Notificar</h1>
+  </div>
+  <!-- /Cabecera -->
+  <!-- Contenido -->
+  <div data-role="content">
+   <iframe id="frame03" src="http://www.exefire.com/pruebas/llamados/rne_notificar.php" width="100%" height="100%" frameborder="0"></iframe>
+  </div>
+  <!-- /Contenido -->
+  <!-- Abajo --> 
+  <div data-role="footer" style="background:none; border:none;"> 
+    <div data-role="navbar" data-iconpos="bottom" >
+      <ul>
+        <li><a href="#lista">Lista</a></li>
+        <li><a href="#mapa">Mapa</a></li>
+        <li><a href="#notificar" class="ui-btn-active">Notificar</a></li>
+        <li><a href="#miembros">Miembros</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Abajo --> 
+</div>
+<!-- /Pagina --> 
+
+<!-- Pagina -->
+<div data-role="page" id="miembros" style="background:#333;">
+  <!-- Cabecera -->
+  <div data-role="header">
+    <h1>Miembros</h1>
+  </div>
+  <!-- /Cabecera -->
+  <!-- Contenido -->
+  <div data-role="content">
+   <iframe id="frame04" src="http://www.exefire.com/pruebas/llamados/rne_noticias.php" style="background:trasparent !important;" width="100%" height="100%" frameborder="0"></iframe>
+  </div>
+  <!-- /Contenido -->
+  <!-- Abajo --> 
+  <div data-role="footer" style="background:none; border:none;"> 
+    <div data-role="navbar" data-iconpos="bottom" >
+      <ul>
+        <li><a href="#lista">Lista</a></li>
+        <li><a href="#mapa">Mapa</a></li>
+        <li><a href="#notificar">Notificar</a></li>
+        <li><a href="#miembros" class="ui-btn-active">Miembros</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Abajo --> 
+</div>
+<!-- /Pagina --> 
 </body>
 </html>
