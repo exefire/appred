@@ -17,10 +17,23 @@ watchPosition();
 function onDeviceReady() {
 	// Cordova is ready/
 	//navigator.notification.alert('Cordova is ready');
+	document.addEventListener("menubutton", onMenuKeyDown, false);
+}
+function onMenuKeyDown() {
+	$.mobile.changePage("#lista");
 }
 function alertDismissed() {
   // hacer algo
 }
+document.addEventListener("backbutton", function(e){
+    if($.mobile.activePage.is('#lista')){
+        e.preventDefault();
+        navigator.app.exitApp();
+    }
+    else {
+        navigator.app.backHistory()
+    }
+}, false);
 function msg(texto){
 	if(typeof(navigator.notification)=='undefined'){
 		alert(texto);
@@ -47,19 +60,19 @@ function posicion_ok(position){
 	//msg('pos('+lat+','+lon+')');
 }
 $("#lista").live('pagebeforeshow', function() {
-	url = "http://www.exefire.com/pruebas/llamados/rne_lista.php";
+	url = "http://www.exefire.com/pruebas/llamados/rne_lista.php?os=android";
 	$("#frame01").attr('src',url);
 });
 $("#mapa").live('pagebeforeshow', function() {
-	url = "http://www.exefire.com/pruebas/llamados/rne_mapa.php";
+	url = "http://www.exefire.com/pruebas/llamados/rne_mapa.php?os=android";
 	$("#frame02").attr('src',url);
 });
 $("#notificar").live('pagebeforeshow', function() {
-	url = "http://www.exefire.com/pruebas/llamados/rne_notificar.php?lat="+lat+"&lon="+lon+"";
+	url = "http://www.exefire.com/pruebas/llamados/rne_notificar.php?os=android&lat="+lat+"&lon="+lon+"";
 	$("#frame03").attr('src',url);
 });
 $("#miembros").live('pagebeforeshow', function() {
-	url = "http://www.exefire.com/pruebas/llamados/rne_noticias.php";
+	url = "http://www.exefire.com/pruebas/llamados/rne_noticias.php?os=android";
 	$("#frame03").attr('src',url);
 });
 </script>
