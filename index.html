@@ -105,10 +105,10 @@ function ir(pagina){
 function ocultar_carga(){
 	$.mobile.hidePageLoadingMsg();
 }
-$("#error1").live('pageload', function() {
+$("#error1").live('pageshow', function() {
 	ocultar_carga();
 });
-$("#error2").live('pageload', function() {
+$("#error2").live('pageshow', function() {
 	ocultar_carga();
 });
 </script>
