@@ -82,7 +82,7 @@ function posicion_ok(position){
 }
 function ir(pagina){
 	if(checkConnection()){
-		url = "http://www.exefire.com/pruebas/llamados/rne_' + pagina + '.php?os=android&lat="+lat+"&lon="+lon+"";
+		url = "http://www.exefire.com/pruebas/llamados/rne_" + pagina + ".php?os=android&lat="+lat+"&lon="+lon+"";
 		$("#frame_" + pagina).attr('src',url);
 		$.mobile.changePage("#" + pagina);
 	}else{
