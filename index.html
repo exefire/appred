@@ -81,7 +81,7 @@ function posicion_ok(position){
 	//msg('pos('+lat+','+lon+')');
 }
 function ir(pagina){
-	if(checkConnection){
+	if(checkConnection()){
 		url = "http://www.exefire.com/pruebas/llamados/rne_lista.php?os=android";
 		$("#frame_" + pagina).attr('src',url);
 		$.mobile.changePage("#" + pagina);
