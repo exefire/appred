@@ -18,6 +18,25 @@ function onDeviceReady() {
 	// Cordova is ready/
 	//navigator.notification.alert('Cordova is ready');
 	document.addEventListener("menubutton", onMenuKeyDown, false);
+	ir('lista');
+}
+function checkConnection() {
+		var networkState = navigator.network.connection.type;
+
+		var states = {};
+		states[Connection.UNKNOWN]  = 'Unknown connection';
+		states[Connection.ETHERNET] = 'Ethernet connection';
+		states[Connection.WIFI]     = 'WiFi connection';
+		states[Connection.CELL_2G]  = 'Cell 2G connection';
+		states[Connection.CELL_3G]  = 'Cell 3G connection';
+		states[Connection.CELL_4G]  = 'Cell 4G connection';
+		states[Connection.NONE]     = 'No network connection';
+		
+		if(networkState == Connection.NONE || networkState == Connection.UNKNOWN){
+			return false;
+		}else{
+			return true;
+		}
 }
 function onMenuKeyDown() {
 	$.mobile.changePage("#lista");
@@ -53,28 +72,39 @@ function watchPosition() {
 function ErrorUbicacion(error) {
 	var texto = 'No se ha podido obtener la ubicación.';
 	msg(texto);
+	lat = 0;
+	lon = 0;
 }
 function posicion_ok(position){
 	lat = position.coords.latitude;
 	lon = position.coords.longitude;
 	//msg('pos('+lat+','+lon+')');
 }
-$("#lista").live('pagebeforeshow', function() {
+function ir(pagina){
+	if(checkConnection){
+		url = "http://www.exefire.com/pruebas/llamados/rne_lista.php?os=android";
+		$("#frame_" + pagina).attr('src',url);
+		$.mobile.changePage("#" + pagina);
+	}else{
+		$.mobile.changePage("#error");
+	}
+}
+/* $("#lista").live('pagebeforeshow', function() {
 	url = "http://www.exefire.com/pruebas/llamados/rne_lista.php?os=android";
-	$("#frame01").attr('src',url);
+	$("#frame_lista").attr('src',url);
 });
 $("#mapa").live('pagebeforeshow', function() {
 	url = "http://www.exefire.com/pruebas/llamados/rne_mapa.php?os=android";
-	$("#frame02").attr('src',url);
+	$("#frame_mapa").attr('src',url);
 });
 $("#notificar").live('pagebeforeshow', function() {
 	url = "http://www.exefire.com/pruebas/llamados/rne_notificar.php?os=android&lat="+lat+"&lon="+lon+"";
-	$("#frame03").attr('src',url);
+	$("#frame_notificar").attr('src',url);
 });
 $("#miembros").live('pagebeforeshow', function() {
 	url = "http://www.exefire.com/pruebas/llamados/rne_noticias.php?os=android";
-	$("#frame03").attr('src',url);
-});
+	$("#frame_miembros").attr('src',url);
+}); */
 </script>
 <style type="text/css">
 a:link {
@@ -112,14 +142,14 @@ a:link {
   <!-- /Cabecera -->
   <!-- Contenido -->
   <div data-role="content">
-   <iframe id="frame01" src="http://www.exefire.com/pruebas/llamados/rne_lista.php" width="100%" height="100%" frameborder="0"></iframe>
+   <iframe id="frame_lista" src="" width="100%" height="100%" frameborder="0"></iframe>
   </div>
   <!-- /Contenido -->
   <!-- Abajo --> 
   <div data-role="footer" style="background:none; border:none;"> 
     <div data-role="navbar" data-iconpos="bottom" >
       <ul>
-        <li><a href="#lista" class="ui-btn-active">Lista</a></li>
+        <li><a href="#" class="ui-btn-active" onclick="ir('pagina')">Lista</a></li>
         <li><a href="#mapa">Mapa</a></li>
         <li><a href="#notificar">Notificar</a></li>
         <li><a href="#miembros">Miembros</a></li>
@@ -138,7 +168,7 @@ a:link {
   <!-- /Cabecera -->
   <!-- Contenido -->
   <div data-role="content">
-   <iframe id="frame02" src="http://www.exefire.com/pruebas/llamados/rne_mapa.php" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+   <iframe id="frame_mapa" src="" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
   </div>
   <!-- /Contenido -->
   <!-- Abajo --> 
@@ -165,7 +195,7 @@ a:link {
   <!-- /Cabecera -->
   <!-- Contenido -->
   <div data-role="content">
-   <iframe id="frame03" src="http://www.exefire.com/pruebas/llamados/rne_notificar.php" width="100%" height="100%" frameborder="0"></iframe>
+   <iframe id="frame_notificar" src="" width="100%" height="100%" frameborder="0"></iframe>
   </div>
   <!-- /Contenido -->
   <!-- Abajo --> 
@@ -192,7 +222,33 @@ a:link {
   <!-- /Cabecera -->
   <!-- Contenido -->
   <div data-role="content">
-   <iframe id="frame04" src="http://www.exefire.com/pruebas/llamados/rne_noticias.php" style="background:trasparent !important;" width="100%" height="100%" frameborder="0"></iframe>
+   <iframe id="frame_miembros" src="" style="background:trasparent !important;" width="100%" height="100%" frameborder="0"></iframe>
+  </div>
+  <!-- /Contenido -->
+  <!-- Abajo --> 
+  <div data-role="footer" style="background:none; border:none;"> 
+    <div data-role="navbar" data-iconpos="bottom" >
+      <ul>
+        <li><a href="#lista">Lista</a></li>
+        <li><a href="#mapa">Mapa</a></li>
+        <li><a href="#notificar">Notificar</a></li>
+        <li><a href="#miembros" class="ui-btn-active">Miembros</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Abajo --> 
+</div>
+<!-- /Pagina --> 
+<!-- Pagina -->
+<div data-role="page" id="error" style="background:#333;">
+  <!-- Cabecera -->
+  <div data-role="header">
+    <h1>Error</h1>
+  </div>
+  <!-- /Cabecera -->
+  <!-- Contenido -->
+  <div data-role="content">
+   error 123
   </div>
   <!-- /Contenido -->
   <!-- Abajo --> 
