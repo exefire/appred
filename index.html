@@ -94,10 +94,10 @@ function ir(pagina){
 			}
 		}
 		if(url != ""){
-			$.mobile.showPageLoadingMsg();
 			$("#frame_" + pagina).attr('src',url);
 		}
-		$.mobile.changePage("#" + pagina);		
+		$.mobile.changePage("#" + pagina);
+		$.mobile.showPageLoadingMsg();		
 	}else{
 		$.mobile.changePage("#error1");
 	}
@@ -105,6 +105,12 @@ function ir(pagina){
 function ocultar_carga(){
 	$.mobile.hidePageLoadingMsg();
 }
+$("#error1").live('pageload', function() {
+	ocultar_carga();
+});
+$("#error2").live('pageload', function() {
+	ocultar_carga();
+});
 </script>
 <style type="text/css">
 a:link {
@@ -141,7 +147,7 @@ a:link {
   </div>
   <!-- /Cabecera -->
   <!-- Contenido -->
-  <div data-role="content"><a href="#" onclick="test('http://www.exefire.com/pruebas/llamados/rne_lista.php')">123</a>
+  <div data-role="content">
    <iframe id="frame_lista" onload="ocultar_carga()" src="" width="100%" height="100%" frameborder="0"></iframe>
   </div>
   <!-- /Contenido -->
