@@ -82,11 +82,23 @@ function posicion_ok(position){
 }
 function ir(pagina){
 	if(checkConnection()){
-		url = "http://www.exefire.com/pruebas/llamados/rne_" + pagina + ".php?os=android&lat="+lat+"&lon="+lon+"";
-		$("#frame_" + pagina).attr('src',url);
+		url = "http://www.exefire.com/pruebas/llamados/rne_" + pagina + ".php?os=android";
+		if(pagina=='notificar'){
+			url = "http://www.exefire.com/pruebas/llamados/rne_" + pagina + ".php?os=android&lat="+lat+"&lon="+lon+"";
+			if(Math.abs(lat + lon) > 0){
+				// ecnontró ubicación
+			}else{
+				// no encontró ubicación
+				pagina = "error2";
+				url = "";
+			}
+		}
+		if(url != ""){
+			$("#frame_" + pagina).attr('src',url);
+		}
 		$.mobile.changePage("#" + pagina);
 	}else{
-		$.mobile.changePage("#error");
+		$.mobile.changePage("#error1");
 	}
 }
 </script>
@@ -224,7 +236,7 @@ a:link {
 </div>
 <!-- /Pagina --> 
 <!-- Pagina -->
-<div data-role="page" id="error" style="background:#FFF;">
+<div data-role="page" id="error1" style="background:#FFF;">
   <!-- Cabecera -->
   <div data-role="header">
     <h1>RNE</h1>
@@ -236,6 +248,36 @@ a:link {
   <h2>Error</h2>No se ha podido conectar con el servidor.
  <br><br>
  Aseg&uacute;rese de que la aplicaci&oacute;n tenga permisos navegar y de que su dispositivo se encuentre conectado a Internet.
+ </div>
+  </div>
+  <!-- /Contenido -->
+  <!-- Abajo --> 
+  <div data-role="footer" style="background:none; border:none;"> 
+    <div data-role="navbar" data-iconpos="bottom" >
+      <ul>
+        <li><a href="#" onclick="ir('lista')">Lista</a></li>
+        <li><a href="#" onclick="ir('mapa')">Mapa</a></li>
+        <li><a href="#" onclick="ir('notificar')">Notificar</a></li>
+        <li><a href="#" onclick="ir('miembros')">Miembros</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Abajo --> 
+</div>
+<!-- /Pagina --> 
+<!-- Pagina -->
+<div data-role="page" id="error2" style="background:#FFF;">
+  <!-- Cabecera -->
+  <div data-role="header">
+    <h1>RNE</h1>
+  </div>
+  <!-- /Cabecera -->
+  <!-- Contenido -->
+  <div data-role="content">
+  <div style="margin:10px; padding:10px; color:#900; background:#FFC;">
+  <h2>Error</h2>No se ha podido localizar el dispositivo.
+ <br><br>
+ Aseg&uacute;rese de que la aplicaci&oacute;n tenga permisos para usar su ubicaci&oacute;n y tenga activado el GPS.
  </div>
   </div>
   <!-- /Contenido -->
