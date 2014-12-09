@@ -8,6 +8,7 @@
 <script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="jquery.mobile-1.2.0.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<!--<script type="text/javascript" charset="utf-8" src="http://debug.build.phonegap.com/target/target-script-min.js#exefire"></script>-->
 <script>
 // Wait for Cordova to load
 document.addEventListener("deviceready", onDeviceReady, true);
@@ -20,9 +21,15 @@ function onDeviceReady() {
 	document.addEventListener("menubutton", onMenuKeyDown, false);
 	ir('lista');
 }
+		
 function checkConnection() {
+	if (typeof navigator.network == 'undefined') {
+		// Local
+		return true;
+		console.log('Tiene internet');
+	}else{
 		var networkState = navigator.network.connection.type;
-
+		
 		var states = {};
 		states[Connection.UNKNOWN]  = 'Unknown connection';
 		states[Connection.ETHERNET] = 'Ethernet connection';
@@ -37,6 +44,7 @@ function checkConnection() {
 		}else{
 			return true;
 		}
+	}
 }
 function onMenuKeyDown() {
 	ir('lista');
@@ -81,8 +89,10 @@ function posicion_ok(position){
 	//msg('pos('+lat+','+lon+')');
 }
 function ir(pagina){
+	alert(pagina);
 	if(checkConnection()){
 		url = "http://www.exefire.com/pruebas/llamados/rne_" + pagina + ".php?os=android";
+		console.log(url);
 		if(pagina=='notificar'){
 			url = "http://www.exefire.com/pruebas/llamados/rne_" + pagina + ".php?os=android&lat="+lat+"&lon="+lon+"";
 			if(Math.abs(lat + lon) > 0){
